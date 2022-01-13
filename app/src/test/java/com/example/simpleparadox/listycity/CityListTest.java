@@ -1,11 +1,15 @@
 package com.example.simpleparadox.listycity;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class CityListTest {
+
+
 
     private CityList mockCityList() {
         CityList cityList = new CityList();
@@ -43,6 +47,44 @@ class CityListTest {
     }
 
     @Test
+    void testDelete() {
+        CityList cityList = mockCityList();
+        assertEquals(1, cityList.length());
+        City city1 = new City("Panchagarh", "Rangpur");
+        cityList.add(city1);
+        City city2 = new City("Natore", "Rajshahi");
+        cityList.add(city2);
+        City city3 = new City("Naraynganj", "Dhaka");
+        cityList.add(city3);
+        assertEquals(4, cityList.length());
+
+        cityList.delete(city3);
+        assertEquals(3, cityList.length());
+        assertFalse(cityList.getCities().contains(city3));
+
+    }
+
+    @Test
+    void testDeleteException() {
+        CityList cityList = mockCityList();
+        assertEquals(1, cityList.length());
+        City city1 = new City("Panchagarh", "Rangpur");
+        cityList.add(city1);
+        City city2 = new City("Natore", "Rajshahi");
+        cityList.add(city2);
+
+        assertEquals(3, cityList.length());
+
+        cityList.delete(city1);
+        assertEquals(2, cityList.length());
+
+        assertThrows(IllegalArgumentException.class, ()-> {
+            cityList.delete(city1);
+        });
+
+    }
+
+    @Test
     void testGetCities() {
         CityList cityList = mockCityList();
 
@@ -55,4 +97,16 @@ class CityListTest {
         assertEquals(0, mockCity().compareTo(cityList.getCities().get(1)));
     }
 
+
+    @Test
+    void testlength() {
+        CityList cityList = mockCityList();
+        assertEquals(1, cityList.length());
+        City city1 = new City("Rangamati", "Chittagong");
+        cityList.add(city1);
+        City city2 = new City("Natore", "Rajshahi");
+        cityList.add(city2);
+        assertEquals(3, cityList.length());
+
+    }
 }
